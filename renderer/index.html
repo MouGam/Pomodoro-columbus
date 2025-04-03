@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pomodoro</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+    <div id="container">
+
+        <div id="setting-container">
+
+        </div>
+
+        <div id="timer-container">
+            <div class="timer-inner-container">
+                <div id="timer">
+                    <div id="minuates"></div>
+                    :
+                    <div id="seconds"></div>
+                </div>
+                <button id="start-btn">
+                  <img class="play-button" src="../assets/images/play-button.svg" />
+                  <div class="pause-button">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                  </div>
+                </button>
+              </div>
+
+            <div class="list-element-container">
+                <div id="main-element" class="list-element">목록1</div>
+                <div class="list-button-container width-full">
+                    <div class="text-center width-full">완료</div>
+                </div>
+            </div>
+        </div>
+        <div id="to-do-list">
+
+            <!-- <div id="list-top" class="list">
+                <div class="list-element-container">
+                    <div class="list-task-name-container">
+                        <img src="../assets/images/button.svg" class="expand-button toggle">
+                        <div class="list-task-name">목록1</div>
+                    </div>
+                    <div class="list-button-container">
+                        <div class="">현재업무로</div>
+                        <div class="">하위목록 추가</div>
+                        <div class="">완료</div>
+                        <div class="">삭제</div>
+                    </div>
+                    <div class="list">
+                        <div class="list-element-container">
+                            <div class="list-task-name-container">
+                                <div class="expand-button"></div>
+                                <div class="list-task-name">목록1-1</div>
+                            </div>
+                            <div class="list-button-container">
+                                <div class="">현재업무로</div>
+                                <div class="">하위목록 추가</div>
+                                <div class="">완료</div>
+                                <div class="">삭제</div>
+                            </div>
+                            <div id="list">
+                                
+                            </div>
+                        </div>
+                        <div class="list-element-container">
+                            <div class="list-task-name-container">
+                                <div class="expand-button"></div>
+                                <div class="list-task-name">목록1-2</div>
+                            </div>
+                            <div class="list-button-container">
+                                <div class="">현재업무로</div>
+                                <div class="">하위목록 추가</div>
+                                <div class="">완료</div>
+                                <div class="">삭제</div>
+                            </div>
+                            <div id="list">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            
+            
+        </div>
+
+        <div id="input-container">
+            <input type="text" id="todo-input" placeholder="새 할 일을 입력하세요" />
+            <button id="add-todo-btn">추가</button>
+        </div>
+
+    </div>
+    <script src="app.js"  type="module" defer></script>
+</body>
+</html>
