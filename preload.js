@@ -2,7 +2,10 @@ const { contextBridge, ipcRenderer } = require('electron');
 // const { v4: uuidv4 } = require('uuid');
 
 contextBridge.exposeInMainWorld('todoAPI', {
-  readTodos: () => ipcRenderer.invoke('read-todos'),
+  readTodos: async () => {
+    const result = await ipcRenderer.invoke('read-todos');
+    return typeof result === 'string' ? JSON.parse(result) : result;
+  },
   writeTodos: (todos) => ipcRenderer.invoke('write-todos', todos),
 });
 

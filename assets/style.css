@@ -73,23 +73,38 @@ h1{
     transform: translateX(-50%);
     font-size: 3em;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
-  
+#timer-text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+#reset-btn{
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px solid #ffffff00;
+    cursor: pointer;
+}
 #start-btn {
     position: absolute;
     right: 32px;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0);
     border-width: 0;
+    width: 48px;
+    height: auto;
 }
 #start-btn:hover{
     filter:opacity(0.7);
     cursor: pointer;
 }
 .play-button {
-    width: auto;
-    height: 48px;
-  }
+    width: 48px;
+    height: auto;
+}
 .pause-button {
     display: flex;
     justify-content: center;
@@ -108,9 +123,9 @@ h1{
     gap:24px;
 }
 
-#main-element{
+/* #current-task{
     font-size: 2em;
-}
+} */
 
 #list-top{
     gap:16px !important;
@@ -151,14 +166,14 @@ h1{
 
     transform: rotate(90deg);
 }
-.list-button-container{
+.task-actions{
     display: flex;
     flex-direction: row;
     gap:12px;
 }
 
 
-#input-container {
+.input-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -166,7 +181,7 @@ h1{
     margin-bottom: 24px;
 }
 
-#todo-input {
+.todo-input {
     /* flex: 1; */
     display: flex;
     padding: 8px;
@@ -177,13 +192,13 @@ h1{
     outline: none;
     /* border-radius: 8px; */
 }
-#todo-input:focus {
+.todo-input:focus {
     border: 0px solid #ffffff; /* 기존 테두리 유지 */
     border-bottom: 2px solid #000000;
     /* 또는 다른 색상으로 변경 가능: border: 2px solid #4CAF50; */
 }
 
-#add-todo-btn {
+.add-todo-btn {
     padding: 8px 8px;
     font-family: 'NanumSquareNeo', sans-serif;
     font-size: 1.2em;
@@ -196,7 +211,7 @@ h1{
     width: auto;
 }
 
-#add-todo-btn:hover {
+.add-todo-btn:hover {
     /* background-color: #00000045; */
     color:#00000045;
 }
@@ -209,4 +224,32 @@ h1{
 }
 .width-full{
     width:100%;
+}
+
+
+.none{
+    display: none;
+}
+
+.action{
+    cursor: pointer;
+}
+.action:hover{
+    filter:opacity(0.7);
+}
+
+.font-small{
+    font-size: 1em;
+}
+.font-medium{
+    font-size: 1.2em;
+}
+.font-large{
+    font-size: 1.5em;
+}
+.font-xlarge{
+    font-size: 1.75em;
+}
+.font-xxlarge{
+    font-size: 2em;
 }

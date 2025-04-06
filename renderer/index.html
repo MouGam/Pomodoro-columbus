@@ -15,29 +15,30 @@
         <div id="timer-container">
             <div class="timer-inner-container">
                 <div id="timer">
-                    <div id="minuates"></div>
-                    :
-                    <div id="seconds"></div>
+                    <div id="timer-text">
+                        <span id="minuates" class="font-xlarge"></span>:<span id="seconds" class="font-xlarge"></span>
+                    </div>
+                    <button id="reset-btn" class="btn btn-warning action">초기화</button>
                 </div>
                 <button id="start-btn">
-                  <img class="play-button" src="../assets/images/play-button.svg" />
-                  <div class="pause-button">
+                  <img id="play-button" class="play-button" src="../assets/images/play-button.svg" />
+                  <div id="pause-button" class="pause-button none">
                     <div class="bar"></div>
                     <div class="bar"></div>
                   </div>
                 </button>
               </div>
 
-            <div class="list-element-container">
-                <div id="main-element" class="list-element">목록1</div>
+            <div id="current-task" class="list-element-container">
+                <!-- <div id="current-task-name" class="list-element">목록1</div>
                 <div class="list-button-container width-full">
                     <div class="text-center width-full">완료</div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div id="to-do-list">
 
-            <!-- <div id="list-top" class="list">
+            <div id="list-top" class="list">
                 <div class="list-element-container">
                     <div class="list-task-name-container">
                         <img src="../assets/images/button.svg" class="expand-button toggle">
@@ -65,31 +66,17 @@
                                 
                             </div>
                         </div>
-                        <div class="list-element-container">
-                            <div class="list-task-name-container">
-                                <div class="expand-button"></div>
-                                <div class="list-task-name">목록1-2</div>
-                            </div>
-                            <div class="list-button-container">
-                                <div class="">현재업무로</div>
-                                <div class="">하위목록 추가</div>
-                                <div class="">완료</div>
-                                <div class="">삭제</div>
-                            </div>
-                            <div id="list">
-                                
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
-            </div> -->
+            </div>
             
             
         </div>
 
-        <div id="input-container">
-            <input type="text" id="todo-input" placeholder="새 할 일을 입력하세요" />
-            <button id="add-todo-btn">추가</button>
+        <div class="input-container" id="input-container">
+            <input class="todo-input" type="text" id="todo-input" placeholder="새 할 일을 입력하세요" />
+            <button class="add-todo-btn" id="add-todo-btn">추가</button>
         </div>
 
     </div>
