@@ -15,10 +15,10 @@
         <div id="timer-container">
             <div class="timer-inner-container">
                 <div id="timer">
-                    <div id="timer-text">
-                        <span id="minuates" class="font-xlarge"></span>:<span id="seconds" class="font-xlarge"></span>
+                    <div id="timer-text" class="font-xxxxlarge">
+                        <span id="minuates"></span>:<span id="seconds"></span>
                     </div>
-                    <button id="reset-btn" class="btn btn-warning action">초기화</button>
+                    <button id="reset-btn" class="action font-medium">초기화</button>
                 </div>
                 <button id="start-btn">
                   <img id="play-button" class="play-button" src="../assets/images/play-button.svg" />
@@ -30,16 +30,12 @@
               </div>
 
             <div id="current-task" class="list-element-container">
-                <!-- <div id="current-task-name" class="list-element">목록1</div>
-                <div class="list-button-container width-full">
-                    <div class="text-center width-full">완료</div>
-                </div> -->
             </div>
         </div>
         <div id="to-do-list">
 
             <div id="list-top" class="list">
-                <div class="list-element-container">
+                <!-- <div class="list-element-container">
                     <div class="list-task-name-container">
                         <img src="../assets/images/button.svg" class="expand-button toggle">
                         <div class="list-task-name">목록1</div>
@@ -68,7 +64,7 @@
                         </div>
                         
                     </div>
-                </div>
+                </div> -->
             </div>
             
             
@@ -80,6 +76,13 @@
         </div>
 
     </div>
+
+
+    <audio id="timer-basic" src="../assets/audio/basic.mp3"></audio>
+    <audio id="timer-chicken" src="../assets/audio/chicken.mp3"></audio>
+    <audio id="timer-simple" src="../assets/audio/simple.mp3"></audio>
+    <audio id="timer-warning" src="../assets/audio/warning.mp3"></audio>
+
     <script src="app.js"  type="module" defer></script>
 </body>
 </html>

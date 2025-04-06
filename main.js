@@ -5,17 +5,27 @@ const { v4: uuidv4 } = require('uuid');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 718,
+    height: 830,
+    maximizable: false,    // 최대화 버튼 비활성화
+    resizable: false,      // 창 크기 조절 불가
+    fullscreenable: false, // 전체화면 모드 비활성화
+    // frame: false, 
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false
-    }
+    },
   });
 
   win.loadFile('renderer/index.html');
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
+
+  // 앱이 종료되기 전에 실행
+  app.on('before-quit', () => {
+    // 렌더러에 종료 신호 보내기
+    win.webContents.send('app-closing');
+  });
 }
 
 app.whenReady().then(createWindow);
@@ -27,7 +37,15 @@ ipcMain.handle('read-todos', async () => {
       const data = fs.readFileSync(todosPath, 'utf-8');
       return JSON.parse(data);
     } catch (err) {
-      return { error: err.message };
+      return {
+        currentTaskId:  null, 
+        taskTime :  25,
+        restTime :  5,
+        taskList : [], 
+        todayInputTime :  0,
+        todayTaskNumber :  0,
+        alarmType: "basic"
+      };
     }
   });
 
@@ -45,4 +63,4 @@ ipcMain.handle('write-todos', async (event, todos) => {
 // uuid 받아오기
 ipcMain.handle('get-uuid', () => {
     return uuidv4();
-  });
+});

@@ -1,10 +1,11 @@
-import { jsonSecondsToMinutes, parseMinutesToSeconds, findTaskById} from './utils.js';
+import { saveTodoJson } from './utils.js';
 import { toggleTimer, resetTimer} from './timer.js';
-import { renderTopTasks, addTodoRoot, setCurrentTask } from './tasks.js';
+import { renderTopTasks, addTodoRoot, setCurrentTask, toggleTask, addTodoSubtask, endTask, deleteTask } from './tasks.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {
       const todos = await window.todoAPI.readTodos();
+      console.log(todos);
       if(typeof todos === 'string'){
         window.todos = JSON.parse(todos);
       }else if(typeof todos === 'object'){
@@ -20,7 +21,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   // 초기 타이머 세팅
   resetTimer();
-
+  // playSound(window.todos.alarmType);
+  // console.log(window.todos.alarmType);
   // 타이머 시작 버튼 클릭 시 이벤트 처리
   document.getElementById('start-btn').addEventListener('click', () => {
     toggleTimer();
@@ -65,12 +67,16 @@ document.addEventListener('click', (e) => {
           `.input-container[data-parent-id="${taskId}"]`
       );
       
-      // 6. input-container 보이게 하기
-      inputContainer.classList.remove('none');
-      
-      // 7. 입력창에 포커스
-      const input = document.getElementById(`todo-input-${taskId}`);
-      input.focus();
+      if(inputContainer.classList.contains('none')){
+        // 6. input-container 보이게 하기
+        inputContainer.classList.remove('none');
+        
+        // 7. 입력창에 포커스
+        const input = document.getElementById(`todo-input-${taskId}`);
+        input.focus();
+      }else{
+        inputContainer.classList.add('none');
+      }
   }
 
   if (actionButton.dataset.action === 'cancel-add-subtask') {
@@ -82,11 +88,35 @@ document.addEventListener('click', (e) => {
   }
   
   if(actionButton.dataset.action === 'add-subtask'){
-    console.log(actionButton);
+    const taskName = document.getElementById(`todo-input-${taskId}`).value;
+    // console.log(taskName);
+    addTodoSubtask(taskId, taskName);
   }
 
   if(actionButton.dataset.action === 'set-current'){
     // const task = findTaskById(taskId);
     setCurrentTask(taskId);
+  }
+
+  if(actionButton.dataset.action === 'expand'){
+    toggleTask(taskId);
+  }
+
+  if(actionButton.dataset.action === 'complete'){
+    endTask(taskId);
+  }
+
+  if(actionButton.dataset.action === 'delete'){
+    deleteTask(taskId);
+  }
+});
+
+window.api.receive('app-closing', async () => {
+  try {
+      await saveTodoJson();  // 데이터 저장
+      window.api.send('can-close');  // 저장 완료, 이제 진짜 종료
+  } catch (error) {
+      console.error('저장 실패:', error);
+      window.api.send('can-close');  // 에러나도 종료
   }
 });

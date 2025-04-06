@@ -16,15 +16,27 @@
     "directories": {
       "output": "dist"
     },
-    "files": [
+  "files": [
       "main.js",
       "preload.js",
       "renderer/**/*",
-      "package.json"
+      "assets/**/*",
+      "!**/*.map"
     ],
+  "extraResources": [
+    {
+      "from": "assets/",
+      "to": "assets/",
+      "filter": [
+        "**/*",
+        "!**/*.map"
+      ]
+    }
+  ],
     "mac": {
       "target": "dmg",
-      "icon": "assets/icon.icns"
+      "icon": "assets/icon.icns",
+      "identity": null
     },
     "win": {
       "target": "nsis"

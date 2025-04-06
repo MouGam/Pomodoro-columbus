@@ -7,17 +7,25 @@ export function jsonSecondsToMinutes(seconds) {
     };
 }
 
+export function playSound(soundId){
+    const sound = document.getElementById(`timer-${soundId}`);
+    sound.currentTime = 0;
+    sound.play();
+}
+
 export function parseMinutesToSeconds(min, seconds) {
     // const [mins, secs] = timeStr.split(':').map(Number);
     return min * 60 + seconds;
 }
 
 export async function saveTodoJson(){
-    const todoJson = JSON.stringify(window.todos);
-    await window.todoAPI.writeTodos(todoJson);
+    // const todoJson = JSON.stringify(window.todos, null, 4);
+    await window.todoAPI.writeTodos(window.todos);
 }
 
 export function findTaskById(id, list=null){
+    if(id === null)
+        return null;
     let findTask;
     if(list === null)
         findTask = window.todos.taskList.find(task => id.includes(task.id));
@@ -31,4 +39,12 @@ export function findTaskById(id, list=null){
         return findTask;
     else
         return findTaskById(id, findTask.subTasks);
+}
+
+export function findParentTask(id){
+    const taskLoot = id.split(' ');
+    if(taskLoot.length === 0 || taskLoot.length === 1)
+        return null;
+    const parentTaskId = taskLoot.slice(0, taskLoot.length - 1).join(' ');
+    return findTaskById(parentTaskId);
 }

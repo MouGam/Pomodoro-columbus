@@ -34,6 +34,13 @@ body {
 
 }
 
+h1{
+    font-weight: 800;
+}
+
+span{
+    font-size:inherit;
+}
 #container{
     font-family: 'NanumSquareNeo', sans-serif;
     font-weight: 400;
@@ -45,10 +52,7 @@ body {
     align-items: center;
     padding: 48px;
     gap:64px;
-}
-
-h1{
-    font-weight: 800;
+    overflow-x: hidden;
 }
 
 #timer-container {
@@ -71,7 +75,6 @@ h1{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 3em;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -121,6 +124,13 @@ h1{
     flex-direction: column;
     width: 100%;
     gap:24px;
+    height: 330px;  /* 또는 원하는 높이 */
+    overflow-y: auto; 
+    -ms-overflow-style: none;  /* IE, Edge */
+    scrollbar-width: none;   
+}
+#to-do-list::-webkit-scrollbar {
+    display: none;
 }
 
 /* #current-task{
@@ -135,8 +145,9 @@ h1{
     display: flex;
     flex-direction: column;
     gap:8px;
-    width: 100%;
+    width: 90%;
     margin-left: 32px;
+    
 }
 .list-element-container{
     display: flex;
@@ -162,7 +173,7 @@ h1{
     height: auto;
     transition: transform 0.3s ease;
 }
-.expand-button.toggle{
+.expand-button.toggled{
 
     transform: rotate(90deg);
 }
@@ -178,7 +189,7 @@ h1{
     flex-direction: column;
     width: 100%;
     gap: 8px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
 }
 
 .todo-input {
@@ -239,17 +250,27 @@ h1{
 }
 
 .font-small{
-    font-size: 1em;
+    font-size: 1rem;
 }
 .font-medium{
-    font-size: 1.2em;
+    font-size: 1.2rem;
 }
 .font-large{
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 .font-xlarge{
-    font-size: 1.75em;
+    font-size: 1.75rem;
 }
 .font-xxlarge{
-    font-size: 2em;
+    font-size: 2rem;
+}
+.font-xxxlarge{
+    font-size: 2.5rem;
+}
+.font-xxxxlarge{
+    font-size: 3rem;
+}
+
+.left-mg-4{
+    margin-left: 4px;
 }

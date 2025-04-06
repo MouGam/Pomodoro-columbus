@@ -16,3 +16,8 @@ contextBridge.exposeInMainWorld('uuidAPI', {
 // contextBridge.exposeInMainWorld('uuid', {
 //     generate: () => uuidv4()
 //   });
+
+contextBridge.exposeInMainWorld('windowControls', {
+  // minimize: () => ipcRenderer.send('minimize-window'),
+  close: () => ipcRenderer.send('close-window'),
+});
