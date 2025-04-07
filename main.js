@@ -15,7 +15,7 @@ function dataTemplate(){
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 718 + 450,
+    width: 718,
     height: 830,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
@@ -29,7 +29,7 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, 'renderer/index.html'));
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);

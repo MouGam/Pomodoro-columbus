@@ -169,7 +169,7 @@ span{
     flex-direction: column;
     width: 100%;
     gap:24px;
-    height: 330px;  /* 또는 원하는 높이 */
+    height: 300px;  /* 또는 원하는 높이 */
     overflow-y: auto; 
     -ms-overflow-style: none;  /* IE, Edge */
     scrollbar-width: none;   
