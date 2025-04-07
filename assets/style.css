@@ -319,3 +319,7 @@ span{
 .left-mg-4{
     margin-left: 4px;
 }
+
+.completed{
+    text-decoration: line-through;
+}

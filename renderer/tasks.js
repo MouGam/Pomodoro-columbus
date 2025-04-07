@@ -32,7 +32,7 @@ export function renderTopTasks(){
     const topList = window.todos.taskList;
     // console.log(topList);
     topList.forEach(task => {
-        if(task.isEnd)
+        if(!window.todos.showCompleted && task.isEnd)
             return;
         const topListElement = document.createElement('div');
         topListElement.classList.add('top-list');
@@ -42,7 +42,7 @@ export function renderTopTasks(){
 }
 
 function taskElement(task){
-    console.log('taskElement:',task);
+    // console.log('taskElement:',task);
     const time = jsonSecondsToMinutes(task.inputTime);
     const timeStr = time.minuates + ':' + time.seconds;
     return `<div class="list-element-container">
@@ -54,12 +54,12 @@ function taskElement(task){
                 data-task-id="${task.id}" 
                 data-action="expand"
             >
-            <div class="list-task-name font-large">${task.taskName}<span class="font-small left-mg-4">${task.inputTime > 0 ? timeStr : ''}</span><span class="font-small left-mg-4">${task.completeNum ? task.completeNum : 0}</span></div>
+            <div class="list-task-name font-large ${task.isEnd ? 'completed' : ''}">${task.taskName}</div><span class="font-small left-mg-4">${task.inputTime > 0 ? timeStr : ''}</span><span class="font-small left-mg-4">${task.completeNum ? task.completeNum : 0}</span>
         </div>
         <div class="task-actions">
-            <div class="action font-small" data-action="set-current" data-task-id="${task.id}">현재업무로</div>
-            <div class="action font-small" data-action="pre-add-subtask" data-task-id="${task.id}">하위목록 추가</div>
-            <div class="action font-small" data-action="complete" data-task-id="${task.id}">완료</div>
+            <div class="action font-small ${task.isEnd ? 'none' : ''}" data-action="set-current" data-task-id="${task.id}">현재업무로</div>
+            <div class="action font-small ${task.isEnd ? 'none' : ''}" data-action="pre-add-subtask" data-task-id="${task.id}">하위목록 추가</div>
+            <div class="action font-small" data-action=${!task.isEnd ? 'complete' : 'incomplete'} data-task-id="${task.id}">${!task.isEnd ? '완료' : '안 완료'}</div>
             <div class="action font-small" data-action="delete" data-task-id="${task.id}">삭제</div>
         </div>
         <div class="input-container none" data-parent-id="${task.id}">
@@ -167,6 +167,15 @@ export async function endTask(taskId){
     renderTopTasks();
 }
 
+export async function notEndTask(taskId){
+    const task = findTaskById(taskId);
+    task.isEnd = false;
+    task.endDate = 0;
+    await saveTodoJson();
+
+    renderTopTasks();
+}
+
 export async function deleteTask(taskId){
     const taskToBeDeleted = findTaskById(taskId);
 
@@ -186,10 +195,8 @@ export async function deleteTask(taskId){
     renderTopTasks();
 }
 
-export async function completeNumAdd(taskId){
-    const task = findTaskById(taskId);
-    task.completeNum++;
-    await saveTodoJson();
-    renderTopTasks();
-}
+// export async function completeNumAdd(taskId){
+//     const task = findTaskById(taskId);
+//     task.completeNum++;
+// }
 

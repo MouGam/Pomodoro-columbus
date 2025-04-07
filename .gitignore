@@ -5,3 +5,5 @@ package-lock.json
 assets/datas/todos.json
 
 /dist
+
+.DS_Store

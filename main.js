@@ -69,6 +69,16 @@ ipcMain.handle('read-todos', async () => {
     }
 });
 
+ipcMain.handle('get-alarm-type', async () => {
+    try{
+      const alarmType = await fs.promises.readdir(path.join(__dirname, 'assets/audio'));
+      return alarmType;
+    }catch(error){
+      console.error('Error reading alarm type:', error);
+      return { error: error.message };
+    }
+});
+
 // uuid 받아오기
 ipcMain.handle('get-uuid', () => {
     return uuidv4();

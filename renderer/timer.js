@@ -34,9 +34,11 @@ function decrementTime() {
         secElement.textContent = String(currentSeconds).padStart(2, '0');
     } else {
         playSound(window.todos.alarmType);
-
+        if(currentTask)
+            currentTask.completeNum++;
         // 타이머 종료
         stopTimer();
+        resetTimer(true);
     }
 }
 
@@ -72,12 +74,19 @@ export async function setTimer(minuates, seconds) {
     secElement.textContent = String(seconds).padStart(2, '0');
 }
 
-export function resetTimer() {
+export function resetTimer(isRest=false) {
 
     if(isRunning) 
         toggleTimer();
-    currentMinutes = window.todos.taskTime;
-    currentSeconds = 0;
-    minElement.textContent = window.todos.taskTime;
-    secElement.textContent = '00';
+    if(isRest){
+        currentMinutes = window.todos.restTime;
+        currentSeconds = 0;
+        minElement.textContent = window.todos.restTime;
+        secElement.textContent = '00';
+    }else{
+        currentMinutes = window.todos.taskTime;
+        currentSeconds = 0;
+        minElement.textContent = window.todos.taskTime;
+        secElement.textContent = '00';
+    }
 }

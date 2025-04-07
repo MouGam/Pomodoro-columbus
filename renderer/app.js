@@ -1,6 +1,14 @@
 import { showSettingValue, setSettingValue, saveTodoJson } from './utils.js';
 import { toggleTimer, resetTimer} from './timer.js';
-import { renderTopTasks, addTodoRoot, setCurrentTask, toggleTask, addTodoSubtask, endTask, deleteTask } from './tasks.js';
+import { 
+  renderTopTasks, 
+  addTodoRoot, 
+  setCurrentTask, 
+  toggleTask, 
+  addTodoSubtask, 
+  endTask, 
+  notEndTask, 
+  deleteTask } from './tasks.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -105,6 +113,10 @@ document.addEventListener('click', (e) => {
     endTask(taskId);
   }
 
+  if(actionButton.dataset.action === 'incomplete'){
+    notEndTask(taskId);
+  }
+
   if(actionButton.dataset.action === 'delete'){
     deleteTask(taskId);
   }
@@ -123,6 +135,7 @@ document.getElementById('save-settings').addEventListener('click', async () => {
   await showSettingValue();
   await saveTodoJson();
   resetTimer();
+  renderTopTasks();
 });
 
 document.getElementById('close-settings').addEventListener('click', () => {

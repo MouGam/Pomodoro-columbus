@@ -17,6 +17,10 @@ contextBridge.exposeInMainWorld('uuidAPI', {
 //     generate: () => uuidv4()
 //   });
 
+contextBridge.exposeInMainWorld('alarmAPI', {
+  getAlarmType: () => ipcRenderer.invoke('get-alarm-type')
+});
+
 contextBridge.exposeInMainWorld('windowControls', {
   // minimize: () => ipcRenderer.send('minimize-window'),
   close: () => ipcRenderer.send('close-window'),
