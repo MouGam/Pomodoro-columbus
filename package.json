@@ -23,16 +23,16 @@
       "assets/**/*",
       "!**/*.map"
     ],
-  "extraResources": [
-    {
-      "from": "assets/",
-      "to": "assets/",
-      "filter": [
-        "**/*",
-        "!**/*.map"
-      ]
-    }
-  ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": [
+          "**/*",
+          "!.DS_Store" 
+        ]
+      }
+    ],
     "mac": {
       "target": "dmg",
       "icon": "assets/icon.icns",
