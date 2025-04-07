@@ -1,4 +1,4 @@
-import { saveTodoJson } from './utils.js';
+import { showSettingValue, setSettingValue, saveTodoJson } from './utils.js';
 import { toggleTimer, resetTimer} from './timer.js';
 import { renderTopTasks, addTodoRoot, setCurrentTask, toggleTask, addTodoSubtask, endTask, deleteTask } from './tasks.js';
 
@@ -21,15 +21,17 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
   // 초기 타이머 세팅
   resetTimer();
-  // playSound(window.todos.alarmType);
-  // console.log(window.todos.alarmType);
+
   // 타이머 시작 버튼 클릭 시 이벤트 처리
   document.getElementById('start-btn').addEventListener('click', () => {
+    // console.log('start-btn');
+    renderTopTasks();
     toggleTimer();
   });
 
   // 타이머 초기화 버튼 클릭 시 이벤트 처리
   document.getElementById('reset-btn').addEventListener('click', () => {
+    renderTopTasks();
     resetTimer();
   });
 
@@ -41,20 +43,19 @@ window.addEventListener('DOMContentLoaded', async () => {
     addTodoRoot();
   });
 
-  // Enter 키 이벤트 추가
-  document.getElementById('todo-input').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addTodoRoot();
-    }
-  });
+  // // Enter 키 이벤트 추가
+  // document.getElementById('todo-input').addEventListener('keydown', (e) => {
+  //   if (e.key === 'Enter') {
+  //     e.preventDefault();
+  //     addTodoRoot();
+  //   }
+  // });
 });
 
 
 document.addEventListener('click', (e) => {
   // 2. 클릭된 요소나 그 부모 중에서 'action' 클래스를 가진 가장 가까운 요소 찾기
   const actionButton = e.target.closest('.action');
-  // console.log(actionButton.dataset.action);
   if(!actionButton)
     return;
   
@@ -89,12 +90,10 @@ document.addEventListener('click', (e) => {
   
   if(actionButton.dataset.action === 'add-subtask'){
     const taskName = document.getElementById(`todo-input-${taskId}`).value;
-    // console.log(taskName);
     addTodoSubtask(taskId, taskName);
   }
 
   if(actionButton.dataset.action === 'set-current'){
-    // const task = findTaskById(taskId);
     setCurrentTask(taskId);
   }
 
@@ -111,12 +110,32 @@ document.addEventListener('click', (e) => {
   }
 });
 
-window.api.receive('app-closing', async () => {
-  try {
-      await saveTodoJson();  // 데이터 저장
-      window.api.send('can-close');  // 저장 완료, 이제 진짜 종료
-  } catch (error) {
-      console.error('저장 실패:', error);
-      window.api.send('can-close');  // 에러나도 종료
-  }
+document.getElementById('setting-button').addEventListener('click', () => {
+  const modal = document.getElementById('settings-modal');
+
+  showSettingValue();
+  modal.classList.remove('none');
+
 });
+
+document.getElementById('save-settings').addEventListener('click', async () => {
+  await  setSettingValue();
+  await showSettingValue();
+  await saveTodoJson();
+  resetTimer();
+});
+
+document.getElementById('close-settings').addEventListener('click', () => {
+  const modal = document.getElementById('settings-modal');
+  modal.classList.add('none');
+});
+
+// window.api.receive('app-closing', async () => {
+//   try {
+//       await saveTodoJson();  // 데이터 저장
+//       window.api.send('can-close');  // 저장 완료, 이제 진짜 종료
+//   } catch (error) {
+//       console.error('저장 실패:', error);
+//       window.api.send('can-close');  // 에러나도 종료
+//   }
+// });

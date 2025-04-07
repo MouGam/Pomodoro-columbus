@@ -48,3 +48,20 @@ export function findParentTask(id){
     const parentTaskId = taskLoot.slice(0, taskLoot.length - 1).join(' ');
     return findTaskById(parentTaskId);
 }
+
+const workTimeInput = document.getElementById('work-time');
+const breakTimeInput = document.getElementById('break-time');
+const showCompletedInput = document.getElementById('show-completed');
+
+export async function showSettingValue(){
+    workTimeInput.value = window.todos.taskTime;
+    breakTimeInput.value = window.todos.restTime;
+    showCompletedInput.checked = window.todos.showCompleted;
+}
+
+export async function setSettingValue(){
+    window.todos.taskTime = workTimeInput.value;
+    window.todos.restTime = breakTimeInput.value;
+    window.todos.showCompleted = showCompletedInput.checked;
+    await saveTodoJson();
+}

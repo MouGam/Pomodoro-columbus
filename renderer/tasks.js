@@ -5,10 +5,32 @@ const todoInputElement = document.getElementById('todo-input');
 const addTodoBtnElement = document.getElementById('add-todo-btn');
 const currentTaskElement = document.getElementById('current-task');
 
+// parentTaskId가 null 일 경우는 루트 태스크
+async function taskTemplate(taskName, parentTaskId = null){
+    const currentDate = new Date();
+    const taskId = parentTaskId === null ?
+        await window.uuidAPI.generate() : parentTaskId + ' ' + await window.uuidAPI.generate();
+    
+    return {
+        id: taskId, 
+        taskName: taskName, 
+        inputTime: 0, 
+        startDate: currentDate.getTime(), 
+        endDate: 0, 
+        isRoot: parentTaskId === null, 
+        isLeaf: true, 
+        isToggled:false,
+        isEnd: false, 
+        inputTime: 0,
+        completeNum: 0,
+        subTasks: []
+    };
+}
+
 export function renderTopTasks(){
     listTopElement.innerHTML = '';
     const topList = window.todos.taskList;
-    console.log(topList);
+    // console.log(topList);
     topList.forEach(task => {
         if(task.isEnd)
             return;
@@ -19,25 +41,6 @@ export function renderTopTasks(){
     });
 }
 
-/**
- * 
- * {
-	taskName:string,
-	id:string,
-	inputTime:number(seconds),
-	startDate:number(그거),
-	endDate:number(그거),
-	isRoot:boolean,
-	isLeaf:boolean,
-	isEnd:boolean,
-    isToggled:boolean,
-	subTasks:[
-		task,
-		task,
-		...
-	]
-}
- */
 function taskElement(task){
     console.log('taskElement:',task);
     const time = jsonSecondsToMinutes(task.inputTime);
@@ -51,7 +54,7 @@ function taskElement(task){
                 data-task-id="${task.id}" 
                 data-action="expand"
             >
-            <div class="list-task-name font-large">${task.taskName}<span class="font-small left-mg-4">${task.inputTime > 0 ? timeStr : ''}</span></div>
+            <div class="list-task-name font-large">${task.taskName}<span class="font-small left-mg-4">${task.inputTime > 0 ? timeStr : ''}</span><span class="font-small left-mg-4">${task.completeNum ? task.completeNum : 0}</span></div>
         </div>
         <div class="task-actions">
             <div class="action font-small" data-action="set-current" data-task-id="${task.id}">현재업무로</div>
@@ -94,22 +97,8 @@ export async function addTodoRoot(){
     if(todo.replaceAll(' ', '') === '')
         return;
 
-    const todoId = await window.uuidAPI.generate();
-
-    const currentDate = new Date();
-    
-    await window.todos.taskList.push({
-        id: todoId, 
-        taskName: todo, 
-        inputTime: 0, 
-        startDate: currentDate.getTime(), 
-        endDate: 0, 
-        isRoot: true, 
-        isLeaf: true, 
-        isToggled:false,
-        isEnd: false, 
-        subTasks: []
-    });
+    const task = await taskTemplate(todo);
+    await window.todos.taskList.push(task);
 
     todoInputElement.value = '';
 
@@ -121,6 +110,12 @@ export async function setCurrentTask(taskId=null){
 
     const task = findTaskById(taskId);
     window.todos.currentTaskId = taskId;
+
+    const currentTask = findTaskById(window.todos.currentTaskId);
+    if(!currentTask || currentTask.isEnd){
+        window.todos.currentTaskId = null;
+    }
+
     await saveTodoJson();
     if(taskId){
         currentTaskElement.innerHTML = 
@@ -140,21 +135,8 @@ export async function addTodoSubtask(taskToBeAddedId, taskName){
 
     taskToBeAdded.isToggled = true;
     taskToBeAdded.isLeaf = false;
-    const taskToAddId = taskToBeAdded.id + ' ' + await window.uuidAPI.generate();
-
-    const currentDate = new Date();
-    const taskToAdd = {
-        id: taskToAddId, 
-        taskName: taskName, 
-        inputTime: 0, 
-        startDate: currentDate.getTime(), 
-        endDate: 0, 
-        isRoot: false, 
-        isLeaf: true, 
-        isToggled:false,
-        isEnd: false, 
-        subTasks: []
-    };
+    
+    const taskToAdd = await taskTemplate(taskName, taskToBeAddedId);
 
     taskToBeAdded.subTasks.push(taskToAdd);
 
@@ -166,11 +148,11 @@ export async function toggleTask(taskId){
     const task = findTaskById(taskId);
     task.isToggled = !task.isToggled;
     await saveTodoJson();
+    renderTopTasks();
     // renderTopTasks();
-    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+    // const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
     // console.log(taskElement);
     // taskElement.classList.toggle('toggled');
-    renderTopTasks();
 }
 
 export async function endTask(taskId){
@@ -203,3 +185,11 @@ export async function deleteTask(taskId){
     await saveTodoJson();
     renderTopTasks();
 }
+
+export async function completeNumAdd(taskId){
+    const task = findTaskById(taskId);
+    task.completeNum++;
+    await saveTodoJson();
+    renderTopTasks();
+}
+

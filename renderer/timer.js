@@ -17,17 +17,16 @@ let currentTask = null;
 
 // 타이머 감소, 내부적인 변수와 화면 표시 변수 모두 감소
 function decrementTime() {
-    if(!currentTask){
+    if(!currentTask)
         currentTask = findTaskById(window.todos.currentTaskId);
-    }
-
-    currentTask.inputTime++;
-
+    
+    if(currentTask)
+        currentTask.inputTime++;
+    
     if (currentSeconds > 0) {
         currentSeconds--;
         secElement.textContent = String(currentSeconds).padStart(2, '0');
 
-        
     } else if (currentMinutes > 0) {
         currentMinutes--;
         currentSeconds = 59;
@@ -35,6 +34,7 @@ function decrementTime() {
         secElement.textContent = String(currentSeconds).padStart(2, '0');
     } else {
         playSound(window.todos.alarmType);
+
         // 타이머 종료
         stopTimer();
     }
