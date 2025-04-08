@@ -19,7 +19,7 @@ function createWindow() {
     height: 830,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
-    fullscreenable: false, // 전체화면 모드 비활성화
+    fullscreenable: false, // 전체화면 모드 비활성화,
     // frame: false, 
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

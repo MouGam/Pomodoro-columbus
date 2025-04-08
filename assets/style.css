@@ -41,6 +41,11 @@ h1{
 span{
     font-size:inherit;
 }
+input {
+    width: auto;
+    min-width: min-content;
+    max-width: max-content;
+}
 #container{
     font-family: 'NanumSquareNeo', sans-serif;
     font-weight: 400;
@@ -207,9 +212,14 @@ span{
     justify-content: start;
 }
 .list-task-name{
+    border: 0px solid #ffffff00;
     position: relative;
     right: 12px;
     font-size: 1.5em;
+}
+.list-task-name:focus{
+    border: 0px solid #ffffff00;
+    outline: none;
 }
 .expand-button{
     position: relative;
@@ -292,6 +302,10 @@ span{
 }
 .action:hover{
     filter:opacity(0.7);
+}
+
+.no-action:hover{
+    filter:opacity(1);
 }
 
 .font-small{

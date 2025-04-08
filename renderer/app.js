@@ -8,7 +8,9 @@ import {
   addTodoSubtask, 
   endTask, 
   notEndTask, 
-  deleteTask } from './tasks.js';
+  deleteTask,
+  editTask
+ } from './tasks.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -109,6 +111,16 @@ document.addEventListener('click', (e) => {
     toggleTask(taskId);
   }
 
+  if(actionButton.dataset.action === 'edit'){
+    const input = document.querySelector(
+      `.list-task-name[data-task-id="${taskId}"]`
+    );
+    // input.focus();
+    // console.log(input);
+    // console.log(taskId);
+    editTask(taskId, input.value);
+  }
+
   if(actionButton.dataset.action === 'complete'){
     endTask(taskId);
   }
@@ -142,13 +154,3 @@ document.getElementById('close-settings').addEventListener('click', () => {
   const modal = document.getElementById('settings-modal');
   modal.classList.add('none');
 });
-
-// window.api.receive('app-closing', async () => {
-//   try {
-//       await saveTodoJson();  // 데이터 저장
-//       window.api.send('can-close');  // 저장 완료, 이제 진짜 종료
-//   } catch (error) {
-//       console.error('저장 실패:', error);
-//       window.api.send('can-close');  // 에러나도 종료
-//   }
-// });
