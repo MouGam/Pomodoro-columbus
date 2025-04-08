@@ -15,7 +15,7 @@ https://drive.google.com/file/d/1mP_J-eKkGBd5NOXU36fyq7StTQDFNrD1/view?usp=drive
     - 화면크기에 맞게, 스크롤 안생기게
 - 위치조정
     - 업무들 위아래로 위치조정 가능하게
-    - 
+    - 타이머, 카운트 딱맞게
 - 휴식타임 타이머
     - 휴식때 색 달라지게
 - 알람
