@@ -5,7 +5,9 @@
 MIT LICENSE
 
 ## 설치방법
-
+### MAC
+https://drive.google.com/file/d/1mP_J-eKkGBd5NOXU36fyq7StTQDFNrD1/view?usp=drive_link
+다운로드
 
 ## 구현할 것
 - 화면크기조절 반응형으로
@@ -18,7 +20,7 @@ MIT LICENSE
     - 휴식때 색 달라지게
 - 알람
     - 알람 추가할 수 있게
-    
+
 ## 추가 계획
 - MCP와 연동
     - MCP tools
