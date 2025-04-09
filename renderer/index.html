@@ -20,6 +20,10 @@
                         <label>휴식 시간 (분)</label>
                         <input type="number" id="break-time" min="1" max="30">
                     </div>
+                    <div class="setting-item">
+                        <label>목표 완료 횟수</label>
+                        <input type="number" id="goal-complete-task-num" min="1" max="15">
+                    </div>
                     <!-- <div class="setting-item">
                         <label>
                             <input type="checkbox" id="sound-enabled">
@@ -48,6 +52,10 @@
         </div>
 
         <div class="setting-container">
+            <div class="today-complete-task-num-container">
+                <div id="today-complete-task-num" class="font-large"></div>
+                <div id="today-complete-task-num-reset" class="action">초기화</div>
+            </div>
             <img id="setting-button" class="setting-button action" src="../assets/images/setting.png"/>
         </div>
 
@@ -71,39 +79,10 @@
             <div id="current-task" class="list-element-container">
             </div>
         </div>
-        <div id="to-do-list">
+        <div id="to-do-list" class="">
 
             <div id="list-top" class="list">
-                <!-- <div class="list-element-container">
-                    <div class="list-task-name-container">
-                        <img src="../assets/images/button.svg" class="expand-button toggle">
-                        <div class="list-task-name">목록1</div>
-                    </div>
-                    <div class="list-button-container">
-                        <div class="">현재업무로</div>
-                        <div class="">하위목록 추가</div>
-                        <div class="">완료</div>
-                        <div class="">삭제</div>
-                    </div>
-                    <div class="list">
-                        <div class="list-element-container">
-                            <div class="list-task-name-container">
-                                <div class="expand-button"></div>
-                                <div class="list-task-name">목록1-1</div>
-                            </div>
-                            <div class="list-button-container">
-                                <div class="">현재업무로</div>
-                                <div class="">하위목록 추가</div>
-                                <div class="">완료</div>
-                                <div class="">삭제</div>
-                            </div>
-                            <div id="list">
-                                
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div> -->
+                <!-- 여기 안쪽으로 목록 렌더링 -->
             </div>
             
             

@@ -4,6 +4,7 @@ const listTopElement = document.getElementById('list-top');
 const todoInputElement = document.getElementById('todo-input');
 const addTodoBtnElement = document.getElementById('add-todo-btn');
 const currentTaskElement = document.getElementById('current-task');
+const todayCompleteTaskNum = document.getElementById('today-complete-task-num'); 
 
 // parentTaskId가 null 일 경우는 루트 태스크
 async function taskTemplate(taskName, parentTaskId = null){
@@ -45,16 +46,26 @@ function taskElement(task){
     // console.log('taskElement:',task);
     const time = jsonSecondsToMinutes(task.inputTime);
     const timeStr = time.minuates + ':' + time.seconds;
+
+    if(window.todos.showCompleted == false && task.isEnd)
+        return '';
+
+    let showToggler = false;
+    if(window.todos.showCompleted)
+        showToggler = task.subTasks.length > 0;
+    else
+        showToggler = task.subTasks.filter(task => !task.isEnd).length > 0;
+
     return `<div class="list-element-container">
         <div class="list-task-name-container">
             <img 
                 src="../assets/images/button.svg" 
-                class="${ task.subTasks.filter(task => !task.isEnd).length ? '': 'none'} ${task.isToggled ? 'toggled' : ''}
+                class="${ showToggler ? '': 'none'} ${task.isToggled ? 'toggled' : ''}
                     action expand-button" 
                 data-task-id="${task.id}" 
                 data-action="expand"
             >
-            <input value="${task.taskName}" class="list-task-name font-large ${task.isEnd ? 'completed' : ''}" data-task-id="${task.id}"></input><span class="font-small left-mg-4">${task.inputTime > 0 ? timeStr : ''}</span><span class="font-small left-mg-4">${task.completeNum ? task.completeNum : 0}</span>
+            <input value="${task.taskName}" ${window.todos.showCompleted && task.isEnd ? 'disabled' : ''} class="list-task-name font-large ${task.isEnd ? 'completed' : ''}" data-task-id="${task.id}"></input><span class="font-small left-mg-4 ${window.todos.showCompleted && task.isEnd ? '': 'none'}">소요시간: ${task.inputTime > 0 ? timeStr : ''}</span><span class="font-small left-mg-4">${task.completeNum ? task.completeNum : 0}</span>
         </div>
         <div class="task-actions">
             <div class="action font-small ${task.isEnd ? 'none' : ''}" data-action="set-current" data-task-id="${task.id}">현재업무로</div>
@@ -86,8 +97,7 @@ function taskElement(task){
         </div>
         <div class="list" data-task-id="${task.id}">
             ${ !task.isLeaf && task.isToggled ? 
-                task.subTasks.map(task => !task.isEnd ? taskElement(task) : '')
-                .join('') : ''}
+                task.subTasks.map(subTask => taskElement(subTask)).join('') : ''}
         </div>
     </div>`
 }
@@ -201,4 +211,16 @@ export async function editTask(taskId, taskName){
     task.taskName = taskName;
     await saveTodoJson();
     renderTopTasks();
+}
+
+export async function showGoalCompleteTaskNum(){ 
+    // console.log(goalCompleteTaskNum);
+    todayCompleteTaskNum.innerHTML = `${window.todos.todayCompleteTaskNum} / ${window.todos.goalCompleteTaskNum}`;
+    // console.log(goalCompleteTaskNum);
+}
+
+export async function resetTodayCompleteTaskNum(){
+    window.todos.todayCompleteTaskNum = 0;
+    await saveTodoJson();
+    showGoalCompleteTaskNum();
 }

@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('todoAPI', {
     return typeof result === 'string' ? JSON.parse(result) : result;
   },
   writeTodos: (todos) => ipcRenderer.invoke('write-todos', todos),
+  resetTodos: () => ipcRenderer.invoke('reset-todos')
 });
 
 contextBridge.exposeInMainWorld('uuidAPI', {
@@ -21,7 +22,7 @@ contextBridge.exposeInMainWorld('alarmAPI', {
   getAlarmType: () => ipcRenderer.invoke('get-alarm-type')
 });
 
-contextBridge.exposeInMainWorld('windowControls', {
-  // minimize: () => ipcRenderer.send('minimize-window'),
-  close: () => ipcRenderer.send('close-window'),
-});
+// contextBridge.exposeInMainWorld('windowControls', {
+//   // minimize: () => ipcRenderer.send('minimize-window'),
+//   close: () => ipcRenderer.send('close-window'),
+// });

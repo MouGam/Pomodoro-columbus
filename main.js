@@ -9,14 +9,36 @@ function dataTemplate(){
     taskTime: 25,
     restTime: 5,
     alarmType: 'basic',
+    showCompleted: false,
+    todayCompleteTaskNum:0,
+    goalCompleteTaskNum: 10,
     taskList: []
   };
 }
 
+// function taskTemplate(id, taskName, isRoot, isLeaf, isToggled=false, isEnd=false, inputTime=0, completeNum=0, subTasks=[]){
+//   const defaultTemplate = {
+//     id: null, 
+//     taskName: null, 
+//     inputTime: 0, 
+//     startDate: new Date().getTime(), 
+//     endDate: 0, 
+//     isRoot: null, 
+//     isLeaf: null, 
+//     isToggled: isToggled,
+//     isEnd: isEnd, 
+//     inputTime: inputTime,
+//     completeNum: completeNum,
+//     subTasks: subTasks
+//   };
+
+//   return defaultTemplate;
+// }
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 718,
-    height: 830,
+    height: 780,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
     fullscreenable: false, // 전체화면 모드 비활성화,
@@ -67,6 +89,11 @@ ipcMain.handle('read-todos', async () => {
         console.error('Error reading todos:', error);
         return { error: error.message };
     }
+});
+
+ipcMain.handle('reset-todos', async () => {
+    const defaultData = dataTemplate();
+    return defaultData;
 });
 
 ipcMain.handle('get-alarm-type', async () => {

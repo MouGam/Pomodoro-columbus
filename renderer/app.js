@@ -1,4 +1,4 @@
-import { showSettingValue, setSettingValue, saveTodoJson } from './utils.js';
+import { showSettingValue, setSettingValue, saveTodoJson, resetTodoJson } from './utils.js';
 import { toggleTimer, resetTimer} from './timer.js';
 import { 
   renderTopTasks, 
@@ -9,13 +9,18 @@ import {
   endTask, 
   notEndTask, 
   deleteTask,
-  editTask
+  editTask,
+  showGoalCompleteTaskNum,
+  resetTodayCompleteTaskNum
  } from './tasks.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {
       const todos = await window.todoAPI.readTodos();
-      console.log(todos);
+
+      // for debugging
+      // console.log(todos);
+
       if(typeof todos === 'string'){
         window.todos = JSON.parse(todos);
       }else if(typeof todos === 'object'){
@@ -29,9 +34,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
       console.error('readTodos 중 에러 발생:', err);
   }
+  // await resetTodoJson();
   // 초기 타이머 세팅
   resetTimer();
-
+  showGoalCompleteTaskNum();
+  // resetTodayCompleteTaskNum();
   // 타이머 시작 버튼 클릭 시 이벤트 처리
   document.getElementById('start-btn').addEventListener('click', () => {
     // console.log('start-btn');
@@ -47,7 +54,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // task 렌더링
   renderTopTasks();
-
+  // console.log(window.todos);
   // 새 할 일 추가 버튼 클릭 시 이벤트 처리
   document.getElementById('add-todo-btn').addEventListener('click', () => {
     addTodoRoot();
@@ -147,10 +154,17 @@ document.getElementById('save-settings').addEventListener('click', async () => {
   await showSettingValue();
   await saveTodoJson();
   resetTimer();
+  showGoalCompleteTaskNum();
   renderTopTasks();
 });
 
 document.getElementById('close-settings').addEventListener('click', () => {
   const modal = document.getElementById('settings-modal');
   modal.classList.add('none');
+});
+
+document.getElementById('today-complete-task-num-reset').addEventListener('click', () => {
+  // console.log(window.todos);
+  resetTodayCompleteTaskNum();
+  // console.log(window.todos);
 });

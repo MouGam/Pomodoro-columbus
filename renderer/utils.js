@@ -52,12 +52,16 @@ export function findParentTask(id){
 const workTimeInput = document.getElementById('work-time');
 const breakTimeInput = document.getElementById('break-time');
 const showCompletedInput = document.getElementById('show-completed');
+const goalCompleteTaskNumInput = document.getElementById('goal-complete-task-num');
 const alarmTypeSelect = document.getElementById('alarm-type');
 
 export async function showSettingValue(){
+    if(window.todos.goalCompleteTaskNum === undefined)
+        window.todos.goalCompleteTaskNum = 10;
     workTimeInput.value = window.todos.taskTime;
     breakTimeInput.value = window.todos.restTime;
     showCompletedInput.checked = window.todos.showCompleted;
+    goalCompleteTaskNumInput.value = window.todos.goalCompleteTaskNum;
     const alarmType = (await window.alarmAPI.getAlarmType()).map(e=>e.replace('.mp3', ''));
     alarmTypeSelect.innerHTML = alarmType.map(type => `<option value="${type}">${type}</option>`).join('');
     alarmTypeSelect.value = window.todos.alarmType;
@@ -67,7 +71,15 @@ export async function setSettingValue(){
     window.todos.taskTime = workTimeInput.value;
     window.todos.restTime = breakTimeInput.value;
     window.todos.showCompleted = showCompletedInput.checked;
+    window.todos.goalCompleteTaskNum = goalCompleteTaskNumInput.value;
     window.todos.alarmType = alarmTypeSelect.value;
     // console.log(window.todos);
+    await saveTodoJson();
+}
+
+export async function resetTodoJson(){
+    const defaultData = await window.todoAPI.resetTodos();
+    defaultData.taskList = window.todos.taskList;
+    window.todos = defaultData;
     await saveTodoJson();
 }
