@@ -5,9 +5,10 @@
 MIT LICENSE
 
 ## 설치방법
-``` npm install```
-``` npm run dist```
-이후 (프로젝트 루트)/dist/mac-arm64/PomodoroTimer 실행
+### MAC
+[다운로드 링크](https://drive.google.com/file/d/1HQFyFLLTmQ1oem_ZfkpE7po1ZaSOuhlZ/view?usp=drive_link)
+### Window
+[다운로드 링크](https://drive.google.com/file/d/19Oax8ZK9qeI7aFTC6qYVIRHowujij_mU/view?usp=sharing)
 
 
 ## 구현할 것
