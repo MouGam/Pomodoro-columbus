@@ -6,7 +6,15 @@ MIT LICENSE
 
 ## 설치방법
 ### MAC
-[다운로드 링크](https://drive.google.com/file/d/1HQFyFLLTmQ1oem_ZfkpE7po1ZaSOuhlZ/view?usp=drive_link)
+
+1. zip 파일 다운로드 후 압축해제
+2. 루트 폴더에서 
+`npm install`
+3. 설치 완료되면 
+`npm dist`
+4. 루트폴더/dist/mac-arm64/PomodoroTimer 응용 프로그램 폴더로 이동
+5. 완료
+
 ### Window
 [다운로드 링크](https://drive.google.com/file/d/19Oax8ZK9qeI7aFTC6qYVIRHowujij_mU/view?usp=sharing)
 
@@ -23,6 +31,7 @@ MIT LICENSE
 - 현재업무로 하위목록 추가 수정 완료 삭제 -> 조건부 표시. 너무 난잡함
 - 완료 밖으로 빼기
 
+## 완
 - ~~하위목록 완료처리시 안보임~~
 - ~~맨위 너무 길게되어있음~~
 - ~~소요시간 내부데이터로만 남겨놓기~~
@@ -48,18 +57,28 @@ MIT LICENSE
 - 오늘한 작업 아래에 표시
 - 순위
 - 완료목록 background-color 약간 회색임
+- 업무 수정시 현재할일에 반영시키기
 
 ## 추가 계획
 - MCP와 연동
     - MCP tools
         - 현재 목록 가져가게
 - 업데이트 기능
+    - electron-updater
 - 리팩토링
     - 클래스로
     - 데이터베이스?
         - json로컬로 이용중
         - 다른방식으로 가능한가?
+        - 일종의 문서 편집기로써 작동하도록
 - 옵시디언 연동
+- 설계원리 문서
+- 현재는 '형식에 맞는 json에 타이머를 갖다 붙인다'로 제작되었는데
+마크다운 h1, h2, h... 태그 옆에다 갖다붙이는걸로 가도 괜찮을듯 싶다.
+그니까 현재의 'json + 타이머/기능' 체제에서 'md + 타이머/기능' 체제로 갔을 때 더 효과가 좋지 않을까 하는 생각
+
+그리고 이거에 대해서도 "스타트업적 발상" 적용해서 생각 한번 해볼 필요 느낌
+
 
 ## opensource
 Electron

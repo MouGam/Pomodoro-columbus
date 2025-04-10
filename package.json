@@ -33,12 +33,24 @@
       }
     ],
     "mac": {
-      "target": "dmg",
+      "target": ["zip","dmg"],
       "icon": "assets/icon.icns",
-      "identity": null
+      "identity": null,
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "gatekeeperAssess": false,
+      "strictVerify": false,
+      "darkModeSupport": true,
+      "timestamp": true
+    },
+    "dmg": {
+      "sign": false,
+      "writeUpdateInfo": false
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "assets/icon.ico"
     }
   },
   "keywords": [],
@@ -53,6 +65,7 @@
     "nodemon": "^3.1.9"
   },
   "dependencies": {
+    "electron-updater": "^6.6.2",
     "uuid": "^11.1.0"
   }
 }

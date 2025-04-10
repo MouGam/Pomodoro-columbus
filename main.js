@@ -37,8 +37,8 @@ function dataTemplate(){
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 718,
-    height: 780,
+    width: 720,
+    height: 760,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
     fullscreenable: false, // 전체화면 모드 비활성화,

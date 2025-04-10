@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- JavaScript 실행을 위한 메모리 권한 -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Just-In-Time 컴파일 허용 (V8 엔진에 필요) -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+
+    <!-- Electron의 내부 라이브러리 사용 권한 -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- 부모 프로세스로부터 권한 상속 -->
+    <key>com.apple.security.inherit</key>
+    <true/>
+  </dict>
+</plist>

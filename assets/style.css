@@ -184,17 +184,18 @@ span{
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    padding: 28px 0;
     /* 픽셀 단위로 그림자 설정 */
     mask-image: linear-gradient(to bottom, 
         transparent 0px,
-        black 50px,
-        black calc(100% - 50px),
+        black 32px,
+        black calc(100% - 32px),
         transparent 100%
     );
     -webkit-mask-image: linear-gradient(to bottom, 
         transparent 0px,
-        black 50px,
-        black calc(100% - 50px),
+        black 32px,
+        black calc(100% - 32px),
         transparent 100%
     );
 }
