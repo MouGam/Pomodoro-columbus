@@ -1,7 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, powerSaveBlocker } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+
+// 전역 변수 추가
+let powerSaveBlockerId = null;
 
 function dataTemplate(){
   return {
@@ -38,7 +41,7 @@ function dataTemplate(){
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 720 + 450,
+    width: 720,
     height: 760,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
@@ -47,15 +50,40 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      backgroundThrottling: false
     },
   });
 
+  // 새로운 이벤트 리스너들 추가
+  win.on('hide', () => {
+    if (!powerSaveBlockerId) {
+      powerSaveBlockerId = powerSaveBlocker.start('prevent-app-suspension');
+    }
+  });
+
+  win.on('show', () => {
+    if (powerSaveBlockerId) {
+      powerSaveBlocker.stop(powerSaveBlockerId);
+      powerSaveBlockerId = null;
+    }
+  });
+
   win.loadFile(path.join(__dirname, 'renderer/index.html'));
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
+
+// 앱 종료 시 처리 추가
+app.on('window-all-closed', () => {
+  if (powerSaveBlockerId) {
+    powerSaveBlocker.stop(powerSaveBlockerId);
+  }
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 // 사용자의 데이터 디렉토리 경로 얻기
 const userDataPath = app.getPath('userData');
