@@ -1,4 +1,4 @@
-import { showSettingValue, setSettingValue, saveTodoJson, resetTodoJson } from './utils.js';
+import { showSettingValue, setSettingValue, saveTodoJson, resetTodoJson, setDarkMode } from './utils.js';
 import { toggleTimer, resetTimer} from './timer.js';
 import { 
   renderTopTasks, 
@@ -38,6 +38,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   // await resetTodoJson();
   // 초기 타이머 세팅
   resetTimer();
+  setDarkMode();
   showGoalCompleteTaskNum();
   // resetTodayCompleteTaskNum();
   // 타이머 시작 버튼 클릭 시 이벤트 처리
@@ -152,6 +153,7 @@ document.getElementById('save-settings').addEventListener('click', async () => {
   await showSettingValue();
   await saveTodoJson();
   resetTimer();
+  setDarkMode();
   showGoalCompleteTaskNum();
   renderTopTasks();
 });

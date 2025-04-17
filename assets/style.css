@@ -360,3 +360,56 @@ span{
 .completed{
     text-decoration: line-through;
 }
+
+.dark-mode{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.light-mode{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-mode .modal-content{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.light-mode .modal-content{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-mode .assets{
+    filter: invert(1);
+}
+.dark-mode .assets:hover{
+    filter: invert(0.7) !important;
+}
+.light-mode .assets{
+    filter: invert(0);
+}
+
+.dark-mode .action{
+    color: #ffffff;
+}
+
+.light-mode .action{
+    color: #000000;
+}
+
+.dark-mode input{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.dark-mode input:focus{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.dark-mode .btn{
+    background-color: #000000;
+    color: #ffffff;
+}
