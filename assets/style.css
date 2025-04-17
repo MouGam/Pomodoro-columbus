@@ -217,7 +217,6 @@ span{
     gap:8px;
     width: 90%;
     margin-left: 32px;
-    
 }
 .list-element-container{
     display: flex;
@@ -258,7 +257,6 @@ span{
     flex-direction: row;
     gap:12px;
 }
-
 
 .input-container {
     display: flex;
@@ -304,7 +302,6 @@ span{
     /* background-color: #00000045; */
     color:#00000045;
 }
-
 
 
 /* 아래는 임시 */

@@ -53,6 +53,7 @@ const workTimeInput = document.getElementById('work-time');
 const breakTimeInput = document.getElementById('break-time');
 const showCompletedInput = document.getElementById('show-completed');
 const goalCompleteTaskNumInput = document.getElementById('goal-complete-task-num');
+const isDarkModeInput = document.getElementById('is-dark-mode');
 const alarmTypeSelect = document.getElementById('alarm-type');
 
 export async function showSettingValue(){
@@ -61,6 +62,7 @@ export async function showSettingValue(){
     workTimeInput.value = window.todos.taskTime;
     breakTimeInput.value = window.todos.restTime;
     showCompletedInput.checked = window.todos.showCompleted;
+    isDarkModeInput.checked = window.todos.isDarkMode;
     goalCompleteTaskNumInput.value = window.todos.goalCompleteTaskNum;
     const alarmType = (await window.alarmAPI.getAlarmType()).map(e=>e.replace('.mp3', ''));
     alarmTypeSelect.innerHTML = alarmType.map(type => `<option value="${type}">${type}</option>`).join('');
@@ -72,6 +74,7 @@ export async function setSettingValue(){
     window.todos.restTime = breakTimeInput.value;
     window.todos.showCompleted = showCompletedInput.checked;
     window.todos.goalCompleteTaskNum = goalCompleteTaskNumInput.value;
+    window.todos.isDarkMode = isDarkModeInput.checked;
     window.todos.alarmType = alarmTypeSelect.value;
     // console.log(window.todos);
     await saveTodoJson();

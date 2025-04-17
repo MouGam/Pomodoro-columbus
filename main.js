@@ -12,6 +12,7 @@ function dataTemplate(){
     showCompleted: false,
     todayCompleteTaskNum:0,
     goalCompleteTaskNum: 10,
+    isDarkMode:false,
     taskList: []
   };
 }
@@ -37,7 +38,7 @@ function dataTemplate(){
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 720,
+    width: 720 + 450,
     height: 760,
     maximizable: false,    // 최대화 버튼 비활성화
     resizable: false,      // 창 크기 조절 불가
@@ -51,7 +52,7 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, 'renderer/index.html'));
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
@@ -83,7 +84,12 @@ ipcMain.handle('read-todos', async () => {
             return defaultData;
         }
 
-        const data = await fs.promises.readFile(todosPath, 'utf-8');
+        const data = JSON.parse(await fs.promises.readFile(todosPath, 'utf-8'));
+
+      // 새로 추가되거나 변경한 속성이 있다면 이쪽에 추가한다.
+        if(data.isDarkMode === undefined)
+          data.isDarkMode = false;
+
         return data;
     } catch (error) {
         console.error('Error reading todos:', error);

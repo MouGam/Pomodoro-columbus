@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       const todos = await window.todoAPI.readTodos();
 
       // for debugging
-      // console.log(todos);
+      console.log(todos);
 
       if(typeof todos === 'string'){
         window.todos = JSON.parse(todos);
@@ -28,9 +28,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
       if (todos.error) {
         console.error('읽기 실패:', todos.error);
-      } else {
-        console.log('읽은 todos:', typeof todos);
       }
+      // else {
+        // console.log('읽은 todos:', typeof todos);
+      // }
     } catch (err) {
       console.error('readTodos 중 에러 발생:', err);
   }
@@ -122,9 +123,6 @@ document.addEventListener('click', (e) => {
     const input = document.querySelector(
       `.list-task-name[data-task-id="${taskId}"]`
     );
-    // input.focus();
-    // console.log(input);
-    // console.log(taskId);
     editTask(taskId, input.value);
   }
 
@@ -164,7 +162,5 @@ document.getElementById('close-settings').addEventListener('click', () => {
 });
 
 document.getElementById('today-complete-task-num-reset').addEventListener('click', () => {
-  // console.log(window.todos);
   resetTodayCompleteTaskNum();
-  // console.log(window.todos);
 });
