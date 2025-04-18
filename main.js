@@ -1,10 +1,12 @@
-const { app, BrowserWindow, ipcMain, powerSaveBlocker } = require('electron');
+const { app, BrowserWindow, ipcMain, powerSaveBlocker, Tray, nativeImage } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
 // 전역 변수 추가
 let powerSaveBlockerId = null;
+let tray = null;
+let mainWindow = null;
 
 function dataTemplate(){
   return {
@@ -40,7 +42,7 @@ function dataTemplate(){
 // }
 
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 720,
     height: 760,
     maximizable: false,    // 최대화 버튼 비활성화
@@ -55,22 +57,40 @@ function createWindow() {
     },
   });
 
+  // Tray 생성
+  const icon = nativeImage.createFromPath(path.join(__dirname, 'assets/icon.png'))
+  tray = new Tray(icon.resize({ width: 16, height: 16 }));
+  tray.setToolTip('Pomodoro Timer');
+
+  // Tray 클릭 이벤트 추가
+  tray.on('click', () => {
+    // 창이 숨겨져 있으면 보이게 하고, 최소화되어 있으면 복원
+    if (!mainWindow.isVisible()) {
+      mainWindow.show();
+    }
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    }
+    // 창을 최상위로 가져오고 포커스
+    mainWindow.focus();
+  });
+
   // 새로운 이벤트 리스너들 추가
-  win.on('hide', () => {
+  mainWindow.on('hide', () => {
     if (!powerSaveBlockerId) {
       powerSaveBlockerId = powerSaveBlocker.start('prevent-app-suspension');
     }
   });
 
-  win.on('show', () => {
+  mainWindow.on('show', () => {
     if (powerSaveBlockerId) {
       powerSaveBlocker.stop(powerSaveBlockerId);
       powerSaveBlockerId = null;
     }
   });
 
-  win.loadFile(path.join(__dirname, 'renderer/index.html'));
-  // win.webContents.openDevTools();
+  mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
+  // mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
@@ -79,6 +99,9 @@ app.whenReady().then(createWindow);
 app.on('window-all-closed', () => {
   if (powerSaveBlockerId) {
     powerSaveBlocker.stop(powerSaveBlockerId);
+  }
+  if (tray) {
+    tray.destroy();
   }
   if (process.platform !== 'darwin') {
     app.quit();
@@ -143,4 +166,12 @@ ipcMain.handle('get-alarm-type', async () => {
 // uuid 받아오기
 ipcMain.handle('get-uuid', () => {
     return uuidv4();
+});
+
+// 타이머 업데이트를 위한 IPC 핸들러 추가
+ipcMain.on('update-tray-timer', (event, time) => {
+  if (tray) {
+    // macOS에서 폰트 스타일 적용
+    tray.setTitle(time);
+  }
 });
