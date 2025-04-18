@@ -61,7 +61,7 @@ function taskElement(task){
             <img 
                 src="../assets/images/button.svg" 
                 class="${ showToggler ? '': 'none'} ${task.isToggled ? 'toggled' : ''}
-                    action expand-button" 
+                    action expand-button assets" 
                 data-task-id="${task.id}" 
                 data-action="expand"
             >
